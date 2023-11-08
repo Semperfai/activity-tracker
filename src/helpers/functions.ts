@@ -23,12 +23,14 @@ export function normalizePageHash(): string {
   return PAGE_TIMELINE
 }
 
-export function generateTimelineItems(activities:IActivity[]): ITimelineItem[] {
-
+export function generateTimelineItems(activities: IActivity[]): ITimelineItem[] {
   return [...Array(HOURS_IN_DAY).keys()].map((hour) => {
-    return { hour, activityId: hour % 4 === 0? null: activities[hour % 2  ].id ,activitySeconds: hour % 4 === 0 ? 0: (15 * SECONDS_IN_MINUTE * hour) % SECODNS_IN_HOUR }
+    return {
+      hour,
+      activityId: hour % 4 === 0 ? null : activities[hour % 2].id,
+      activitySeconds: hour % 4 === 0 ? 0 : (15 * SECONDS_IN_MINUTE * hour) % SECODNS_IN_HOUR
+    }
   })
-
 }
 
 export function generateActivitySelectOptions(activities: IActivity[]): IActivitySelectOptions[] {
@@ -74,12 +76,12 @@ export function generatePeriodSelectOptionsLabel(periodsInMinutes: number): stri
   return `${hours}:${minutes}`
 }
 
-export function formatSeconds (seconds: number): string {
+export function formatSeconds(seconds: number): string {
   const date = new Date()
- 
+
   date.setTime(Math.abs(seconds) * MILLISECONDS_IN_SECOND)
- 
+
   const utc = date.toUTCString()
- 
+
   return utc.substring(utc.indexOf(':') - 2, utc.indexOf(':') + 6)
- }
+}

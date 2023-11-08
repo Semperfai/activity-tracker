@@ -27,7 +27,7 @@ function deleteActivity(activity: IActivity) {
   timelineItems.value.forEach((timelineitem) => {
     if (timelineitem.activityId === activity.id) {
       timelineitem.activityId = null
-      timelineitem.activitySeconds  = 0
+      timelineitem.activitySeconds = 0
     }
   })
   activities.value.splice(activities.value.indexOf(activity), 1)

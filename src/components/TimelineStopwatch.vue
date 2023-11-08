@@ -12,15 +12,15 @@ defineProps({
     validator: isNumber
   }
 })
-
-
 </script>
 <template>
   <div class="flex w-full items-center gap-2">
     <BaseButton :type="BUTTON_TYPE_DANGER">
       <ArrowPathIcon class="h-8" />
     </BaseButton>
-    <div class="flex flex-grow items-center rounded bg-gray-100 px-2 font-mono">{{ formatSeconds(seconds) }}</div>
+    <div class="flex flex-grow items-center rounded bg-gray-100 px-2 font-mono">
+      {{ formatSeconds(seconds) }}
+    </div>
     <BaseButton :type="BUTTON_TYPE_WARNING">
       <PauseIcon class="h-8" />
     </BaseButton>
