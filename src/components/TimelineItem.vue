@@ -1,40 +1,38 @@
 <script setup lang="ts">
-import { type ITimelineItem } from '@/components/types'
-import { XMarkIcon } from '@heroicons/vue/24/outline'
-
+import { type ITimelineItem, type IActivitySelectOptions, type IActivity } from '@/components/types'
+import BaseSelect from './BaseSelect.vue'
+import TimelineStopwatch from './TimelineStopwatch.vue'
+import TimelineHour from './TimelineHour.vue'
+import { NULLABLE_ACTIVITY } from '@/constants'
 interface IProps {
   timelineItem: ITimelineItem
+  activities: IActivity[]
+  activitySelectOptions: IActivitySelectOptions[]
 }
 
 const props = defineProps<IProps>()
-const hourLinkCalsses = [
-  'absolute -top-4 left-1/2 -translate-x-1/2 rounded px-2 font-mono text-lg',
+const emit = defineEmits<{
+  selectActivity: [activity: IActivity | null]
+}>()
 
-  props.timelineItem.hour === new Date().getHours()
-    ? 'bg-purple-900 font-black text-white'
-    : 'bg-gray-100 text-gray-500'
-]
-const options = [
-  { value: 1, label: 'Coding' },
-  { value: 2, label: 'Reading' },
-  { value: 3, label: 'Training' }
-]
+function selectActivity(activityId: string) {
+  emit('selectActivity', findActivityById(activityId))
+}
+
+function findActivityById(id: string): IActivity | null {
+  return props.activities.find((activity) => activity.id === id) || NULLABLE_ACTIVITY.id
+}
 </script>
+
 <template>
   <li class="relative flex flex-col gap-2 border-t border-gray-200 px-4 py-10">
-    <a :class="hourLinkCalsses" href="#">{{ timelineItem.hour }}:00</a>
-    <div class="flex gap-2">
-      <button
-        class="enable:hover:bg-gray-200 rounded bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        <XMarkIcon class="h-8" />
-      </button>
-      <select name="" id="" class="w-full truncate rounded bg-gray-100 px-2 py-1 text-2xl">
-        <option selected disabled value="">Rest</option>
-        <option v-for="{ value, label } in options" :value="value" :key="value">{{ label }}</option>
-      </select>
-    </div>
+    <TimelineHour :hour="timelineItem.hour" />
+    <BaseSelect
+      @select="selectActivity"
+      :selected="timelineItem.activityId"
+      :options="activitySelectOptions"
+      placeholder="Rest"
+    />
+    <TimelineStopwatch :seconds="timelineItem.activitySeconds" />
   </li>
 </template>
-
-<style scoped></style>

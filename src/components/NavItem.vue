@@ -11,5 +11,3 @@ defineOptions({
     </a>
   </li>
 </template>
-
-<style scoped></style>

@@ -13,5 +13,3 @@ const emit = defineEmits<{
     <TheHeaderProgress @click="emit('navigate', PAGE_PROGRESS)" />
   </header>
 </template>
-
-<style scoped></style>

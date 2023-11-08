@@ -6,9 +6,13 @@ const emit = defineEmits<{
   navigate: [page: string]
 }>()
 
-defineProps<{
-  currentPage: string
-}>()
+defineProps({
+  currentPage: {
+    type: String,
+    required: true,
+    validator: (value: string) => Object.keys(NAV_ITEMS).includes(value)
+  }
+})
 </script>
 <template>
   <nav class="sticky bottom-0 z-10 bg-white text-2xl">
