@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { PlusIcon } from '@heroicons/vue/24/outline'
 import BaseButton from './BaseButton.vue'
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, inject } from 'vue'
 import { SECODNS_IN_HOUR } from '@/constants'
 import type { IActivity } from './types'
 import { id } from '@/helpers/functions'
+import { createActivityKey } from '@/keys'
 const name = ref('')
-const emit = defineEmits<{
-  (e: 'submit', name: IActivity): void
-}>()
+
+const createActivity = inject(createActivityKey) as (activity: IActivity) => void
 
 const submit = () => {
-  emit('submit', {
+  createActivity({
     id: id(),
     name: name.value,
     secondsToComplete: 0 * SECODNS_IN_HOUR
